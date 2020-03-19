@@ -18,10 +18,6 @@ public abstract class TriangleMatrix extends SquareMatrix {
     
     
     @Override
-    protected abstract void checkIndexes(int row, int column);
-    
-    
-    @Override
     public abstract void setElem(int row, int column, double value);
     
     

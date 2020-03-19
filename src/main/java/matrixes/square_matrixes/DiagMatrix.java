@@ -3,6 +3,8 @@ package matrixes.square_matrixes;
 
 import matrixes.MatrixErrorCode;
 
+import static java.lang.Math.abs;
+
 
 public class DiagMatrix extends TriangleMatrix {
     public DiagMatrix(int dimension) {
@@ -11,16 +13,12 @@ public class DiagMatrix extends TriangleMatrix {
     
     
     @Override
-    protected void checkIndexes(int row, int column) {
-        if (row != column || row < 0 || row >= dimension)
-            throw new ArrayIndexOutOfBoundsException(
-                    String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
-    }
-    
-    
-    @Override
     public void setElem(int row, int column, double value) {
         checkIndexes(row, column);
+        
+        if (abs(value) > EPS && row != column)
+            throw new ArrayIndexOutOfBoundsException(
+                String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
         
         data[row] = value;
     }

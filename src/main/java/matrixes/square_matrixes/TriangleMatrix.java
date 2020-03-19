@@ -13,7 +13,6 @@ public abstract class TriangleMatrix extends SquareMatrix {
                     String.format(MatrixErrorCode.NON_POSITIVE_DIMENSTION.getErrorString(), dimension));
         
         this.dimension = dimension;
-        data = new double[dimension];
     }
     
     

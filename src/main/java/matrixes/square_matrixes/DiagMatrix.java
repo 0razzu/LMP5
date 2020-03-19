@@ -9,6 +9,8 @@ import static java.lang.Math.abs;
 public class DiagMatrix extends TriangleMatrix {
     public DiagMatrix(int dimension) {
         super(dimension);
+        
+        data = new double[dimension];
     }
     
     

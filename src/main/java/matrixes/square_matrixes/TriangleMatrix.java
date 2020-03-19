@@ -32,7 +32,7 @@ public abstract class TriangleMatrix extends SquareMatrix {
         determinant = 1;
         
         for (int i = 0; i < dimension; i++)
-            determinant *= data[i];
+            determinant *= getElem(i, i);
         
         determinantCalculated = true;
         return determinant;

@@ -1,3 +1,9 @@
+package matrixes.square_matrixes;
+
+
+import matrixes.IMatrix;
+import matrixes.MatrixErrorCode;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -6,22 +12,30 @@ import static java.lang.Math.abs;
 
 public class SquareMatrix implements IMatrix {
     public static final double EPS = 1E-9;
-    private double[] data;
-    private int dimension;
-    private double determinant;
-    private boolean determinantCalculated;
+    protected double[] data;
+    protected int dimension;
+    protected double determinant;
+    protected boolean determinantCalculated;
     
     
     public SquareMatrix(int dimension) {
+        if (dimension <= 0)
+            throw new IllegalArgumentException(
+                    String.format(MatrixErrorCode.NON_POSITIVE_DIMENSTION.getErrorString(), dimension));
+        
         this.dimension = dimension;
         data = new double[dimension * dimension];
     }
     
     
-    private void checkIndexes(int row, int column) {
+    protected SquareMatrix() {
+    }
+    
+    
+    protected void checkIndexes(int row, int column) {
         if (row < 0 || column < 0 || row >= dimension || column >= dimension)
             throw new ArrayIndexOutOfBoundsException(
-                    String.format("dimension = %d, row = %d, column = %d", dimension, row, column));
+                    String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
     }
     
     

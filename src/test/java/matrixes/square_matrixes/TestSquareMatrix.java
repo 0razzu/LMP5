@@ -79,6 +79,19 @@ public class TestSquareMatrix {
     
     @Test
     void testGetDeterminant7() {
+        IMatrix matrix = new SquareMatrix(4);
+        
+        matrix.setElem(0, 0, 1); matrix.setElem(0, 1, 1); matrix.setElem(0, 2, 2); matrix.setElem(0, 3, 3);
+                                                          matrix.setElem(1, 2, 4); matrix.setElem(1, 3, 2);
+                                                          matrix.setElem(2, 2, 5); matrix.setElem(2, 3, 1);
+        matrix.setElem(3, 0, 2); matrix.setElem(3, 1, 2); matrix.setElem(3, 2, 1); matrix.setElem(3, 3, 5);
+        
+        assertEquals(0, matrix.getDeterminant(), SquareMatrix.EPS);
+    }
+    
+    
+    @Test
+    void testGetDeterminant8() {
         IMatrix matrix = new SquareMatrix(7);
         
         matrix.setElem(0, 4, 1);  matrix.setElem(0, 5, 20); matrix.setElem(0, 6, 4);
@@ -91,6 +104,9 @@ public class TestSquareMatrix {
         matrix.setElem(5, 2, 1);
         matrix.setElem(6, 2, 2);  matrix.setElem(6, 3, 1);
         
-        assertEquals(396, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertAll(
+                () -> assertEquals(396, matrix.getDeterminant(), SquareMatrix.EPS),
+                () -> assertEquals(396, matrix.getDeterminant(), SquareMatrix.EPS)
+        );
     }
 }

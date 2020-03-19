@@ -20,7 +20,7 @@ public class SquareMatrix implements IMatrix {
     public SquareMatrix(int dimension) {
         if (dimension <= 0)
             throw new IllegalArgumentException(
-                    String.format(MatrixErrorCode.NON_POSITIVE_DIMENSTION.getErrorString(), dimension));
+                    String.format(MatrixErrorCode.NON_POSITIVE_DIMENSION.getErrorString(), dimension));
         
         this.dimension = dimension;
         data = new double[dimension * dimension];

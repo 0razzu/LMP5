@@ -23,6 +23,9 @@ public class DiagMatrix extends TriangleMatrix {
                 String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
         
         data[row] = value;
+        
+        if (row == column)
+            determinantCalculated = false;
     }
     
     

@@ -23,6 +23,9 @@ public class UpTriangleMatrix extends TriangleMatrix {
                     String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
     
         data[row * dimension + column - row * (row + 1) / 2] = value;
+        
+        if (row == column)
+            determinantCalculated = false;
     }
     
     

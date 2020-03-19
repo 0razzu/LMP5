@@ -5,7 +5,6 @@ import matrixes.IMatrix;
 import matrixes.MatrixErrorCode;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 import static java.lang.Math.abs;
 
@@ -128,8 +127,6 @@ public class SquareMatrix implements IMatrix {
     
     @Override
     public int hashCode() {
-        int result = Objects.hash(dimension);
-        result = 31 * result + Arrays.hashCode(data);
-        return result;
+        return Arrays.hashCode(data);
     }
 }

@@ -4,6 +4,8 @@ package matrixes.square_matrixes;
 import matrixes.IMatrix;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -220,6 +222,49 @@ public class TestSquareMatrix {
         assertAll(
                 () -> assertEquals(396, matrix.getDeterminant(), SquareMatrix.EPS),
                 () -> assertEquals(396, matrix.getDeterminant(), SquareMatrix.EPS)
+        );
+    }
+    
+    
+    @Test
+    void testEquals() {
+        IMatrix matrix1 = new SquareMatrix(1);
+        IMatrix matrix2 = new SquareMatrix(2);
+        IMatrix matrix3 = new SquareMatrix(2);
+        IMatrix matrix4 = new SquareMatrix(2);
+        IMatrix matrix5 = matrix4;
+        IMatrix matrix6 = new SquareMatrix(3);
+        IMatrix matrix7 = new SquareMatrix(3);
+        IMatrix matrix8 = new SquareMatrix(3);
+        IMatrix matrix9 = new SquareMatrix(30);
+        
+        matrix4.setElem(1, 1, 1);
+        
+                                   matrix6.setElem(1, 1, 1);
+        matrix6.setElem(2, 0, 9);  matrix6.setElem(2, 1, -1);  matrix6.setElem(2, 2, 1.1);
+    
+                                   matrix7.setElem(1, 1, 1);
+        matrix7.setElem(2, 0, 9);  matrix7.setElem(2, 1, -1);  matrix7.setElem(2, 2, 1.1);
+        matrix7.getDeterminant();
+    
+                                   matrix8.setElem(1, 1, 1);
+        matrix8.setElem(2, 0, 9);  matrix8.setElem(2, 1, -1);  matrix8.setElem(2, 2, 290);
+        
+        assertAll(
+                () -> assertNotEquals(matrix1, ""),
+                () -> assertEquals(matrix1, matrix1),
+                () -> assertNotEquals(matrix2, matrix1),
+                () -> assertEquals(matrix2, matrix3),
+                () -> assertNotEquals(matrix3, matrix4),
+                () -> assertEquals(matrix4, matrix5),
+                () -> assertNotEquals(matrix5, matrix6),
+                () -> assertEquals(matrix6, matrix7),
+                () -> assertNotEquals(matrix7, matrix8),
+                () -> assertNotEquals(matrix9, matrix1),
+                () -> assertNotEquals(matrix9, matrix2),
+                () -> assertNotEquals(matrix9, matrix4),
+                () -> assertNotEquals(matrix9, matrix6),
+                () -> assertNotEquals(matrix9, matrix8)
         );
     }
 }

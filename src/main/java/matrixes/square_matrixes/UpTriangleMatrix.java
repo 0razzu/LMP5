@@ -18,14 +18,16 @@ public class UpTriangleMatrix extends TriangleMatrix {
     public void setElem(int row, int column, double value) {
         checkIndexes(row, column);
         
-        if (abs(value) > EPS && row > column)
-            throw new ArrayIndexOutOfBoundsException(
-                    String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
-        
-        data[row * dimension + column - row * (row + 1) / 2] = value;
-        
-        if (row == column)
-            determinantCalculated = false;
+        if (abs(value) > EPS) {
+            if (row > column)
+                throw new ArrayIndexOutOfBoundsException(
+                        String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
+            
+            data[row * dimension + column - row * (row + 1) / 2] = value;
+            
+            if (row == column)
+                determinantCalculated = false;
+        }
     }
     
     

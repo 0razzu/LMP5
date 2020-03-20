@@ -38,4 +38,23 @@ public class UpTriangleMatrix extends TriangleMatrix {
         
         return data[row * dimension + column - row * (row + 1) / 2];
     }
+    
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        
+        if (o instanceof UpTriangleMatrix) {
+            UpTriangleMatrix that = (UpTriangleMatrix) o;
+            
+            if (dimension != that.dimension)
+                return false;
+            
+            for (int i = 0; i < data.length; i++)
+                if (abs(data[i] - that.data[i]) > EPS)
+                    return false;
+        }
+        
+        return super.equals(o);
+    }
 }

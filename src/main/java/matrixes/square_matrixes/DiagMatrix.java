@@ -38,4 +38,23 @@ public class DiagMatrix extends TriangleMatrix {
         
         return data[row];
     }
+    
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        
+        if (o instanceof DiagMatrix) {
+            DiagMatrix that = (DiagMatrix) o;
+    
+            if (dimension != that.dimension)
+                return false;
+    
+            for (int i = 0; i < data.length; i++)
+                if (abs(data[i] - that.data[i]) > EPS)
+                    return false;
+        }
+        
+        return super.equals(o);
+    }
 }

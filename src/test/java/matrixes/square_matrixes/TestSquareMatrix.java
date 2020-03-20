@@ -14,10 +14,10 @@ public class TestSquareMatrix {
         
         assertAll(
                 () -> assertEquals(2, matrix.getDimension()),
-                () -> assertEquals(0, matrix.getElem(0, 0)),
-                () -> assertEquals(0, matrix.getElem(0, 1)),
-                () -> assertEquals(0, matrix.getElem(1, 0)),
-                () -> assertEquals(0, matrix.getElem(1, 1))
+                () -> assertEquals(0, matrix.getElem(0, 0), SquareMatrix.EPS),
+                () -> assertEquals(0, matrix.getElem(0, 1), SquareMatrix.EPS),
+                () -> assertEquals(0, matrix.getElem(1, 0), SquareMatrix.EPS),
+                () -> assertEquals(0, matrix.getElem(1, 1), SquareMatrix.EPS)
         );
     }
     
@@ -46,15 +46,15 @@ public class TestSquareMatrix {
         matrix.setElem(2, 0, -1); matrix.setElem(2, 1, 110321);
         
         assertAll(
-                () -> assertEquals(10, matrix.getElem(0, 0)),
-                () -> assertEquals(-2.1, matrix.getElem(0, 1)),
-                () -> assertEquals(2.25, matrix.getElem(0, 2)),
-                () -> assertEquals(0, matrix.getElem(1, 0)),
-                () -> assertEquals(0, matrix.getElem(1, 1)),
-                () -> assertEquals(0, matrix.getElem(1, 2)),
-                () -> assertEquals(-1, matrix.getElem(2, 0)),
-                () -> assertEquals(110321, matrix.getElem(2, 1)),
-                () -> assertEquals(0, matrix.getElem(2, 2))
+                () -> assertEquals(10, matrix.getElem(0, 0), SquareMatrix.EPS),
+                () -> assertEquals(-2.1, matrix.getElem(0, 1), SquareMatrix.EPS),
+                () -> assertEquals(2.25, matrix.getElem(0, 2), SquareMatrix.EPS),
+                () -> assertEquals(0, matrix.getElem(1, 0), SquareMatrix.EPS),
+                () -> assertEquals(0, matrix.getElem(1, 1), SquareMatrix.EPS),
+                () -> assertEquals(0, matrix.getElem(1, 2), SquareMatrix.EPS),
+                () -> assertEquals(-1, matrix.getElem(2, 0), SquareMatrix.EPS),
+                () -> assertEquals(110321, matrix.getElem(2, 1), SquareMatrix.EPS),
+                () -> assertEquals(0, matrix.getElem(2, 2), SquareMatrix.EPS)
         );
     }
     

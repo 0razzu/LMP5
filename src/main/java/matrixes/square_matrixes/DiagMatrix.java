@@ -18,20 +18,23 @@ public class DiagMatrix extends TriangleMatrix {
     public void setElem(int row, int column, double value) {
         checkIndexes(row, column);
         
-        if (abs(value) > EPS && row != column)
-            throw new ArrayIndexOutOfBoundsException(
-                String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
-        
-        data[row] = value;
-        
-        if (row == column)
+        if (abs(value) > EPS) {
+            if (row != column)
+                throw new ArrayIndexOutOfBoundsException(
+                        String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
+            
+            data[row] = value;
             determinantCalculated = false;
+        }
     }
     
     
     @Override
     public double getElem(int row, int column) {
         checkIndexes(row, column);
+        
+        if (row != column)
+            return 0;
         
         return data[row];
     }

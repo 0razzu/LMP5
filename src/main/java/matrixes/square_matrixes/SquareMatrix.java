@@ -117,9 +117,10 @@ public class SquareMatrix implements IMatrix {
         if (dimension != (that.dimension))
             return false;
         
-        for (int i = 0; i < data.length; i++)
-            if (abs(data[i] - that.data[i]) > EPS)
-                return false;
+        for (int i = 0; i < dimension; i++)
+            for (int j = 0; j < dimension; j++)
+                if (abs(getElem(i, j) - that.getElem(i, j)) > EPS)
+                    return false;
         
         return true;
     }

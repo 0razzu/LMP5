@@ -114,7 +114,7 @@ public class SquareMatrix implements IMatrix {
         if (!(o instanceof SquareMatrix)) return false;
         SquareMatrix that = (SquareMatrix) o;
         
-        if (dimension != (that.dimension))
+        if (dimension != that.dimension)
             return false;
         
         for (int i = 0; i < dimension; i++)

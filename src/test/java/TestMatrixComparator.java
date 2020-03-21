@@ -111,7 +111,7 @@ public class TestMatrixComparator {
         IMatrix matrix1 = new UpTriangleMatrix(1);
         TriangleMatrix matrix2 = new UpTriangleMatrix(1);
         UpTriangleMatrix matrix3 = new UpTriangleMatrix(1);
-        IMatrix matrix4 = new DiagMatrix(1);
+        IMatrix matrix4 = new UpTriangleMatrix(1);
         
         matrix3.setElem(0, 0, 11);
         

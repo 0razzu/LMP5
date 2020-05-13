@@ -23,7 +23,7 @@ public class SquareMatrix implements IMatrix {
     public SquareMatrix(int dimension) {
         if (dimension <= 0)
             throw new IllegalArgumentException(
-                    String.format(MatrixErrorCode.NON_POSITIVE_DIMENSION.getErrorString(), dimension));
+                    String.format(MatrixErrorCode.NON_POSITIVE_DIMENSION, dimension));
         
         this.dimension = dimension;
         data = new double[dimension * dimension];
@@ -37,7 +37,7 @@ public class SquareMatrix implements IMatrix {
     protected void checkIndexes(int row, int column) {
         if (row < 0 || column < 0 || row >= dimension || column >= dimension)
             throw new ArrayIndexOutOfBoundsException(
-                    String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
+                    String.format(MatrixErrorCode.INCORRECT_INDEXES, dimension, row, column));
     }
     
     

@@ -21,7 +21,7 @@ public class DiagMatrix extends TriangleMatrix {
         if (abs(value) > EPS) {
             if (row != column)
                 throw new ArrayIndexOutOfBoundsException(
-                        String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
+                        String.format(MatrixErrorCode.INCORRECT_INDEXES, dimension, row, column));
             
             data[row] = value;
             determinantCalculated = false;

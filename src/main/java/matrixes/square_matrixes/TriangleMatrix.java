@@ -10,7 +10,7 @@ public abstract class TriangleMatrix extends SquareMatrix {
     
         if (dimension <= 0)
             throw new IllegalArgumentException(
-                    String.format(MatrixErrorCode.NON_POSITIVE_DIMENSION.getErrorString(), dimension));
+                    String.format(MatrixErrorCode.NON_POSITIVE_DIMENSION, dimension));
         
         this.dimension = dimension;
     }

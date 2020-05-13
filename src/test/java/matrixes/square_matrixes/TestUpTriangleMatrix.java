@@ -2,6 +2,7 @@ package matrixes.square_matrixes;
 
 
 import matrixes.IMatrix;
+import matrixes.MatrixErrorCode;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,15 +26,9 @@ public class TestUpTriangleMatrix {
     @Test
     void testConstrExceptions() {
         try {
-            IMatrix matrix1 = new UpTriangleMatrix(-5);
+            IMatrix matrix = new UpTriangleMatrix(-5);
         } catch (IllegalArgumentException e) {
-            assertEquals("Matrix dimension must be positive, but was -5", e.getMessage());
-        }
-        
-        try {
-            IMatrix matrix2 = new UpTriangleMatrix(0);
-        } catch (IllegalArgumentException e) {
-            assertEquals("Matrix dimension must be positive, but was 0", e.getMessage());
+            assertEquals("Matrix dimension cannot be negative, but was -5", e.getMessage());
         }
     }
     
@@ -133,10 +128,20 @@ public class TestUpTriangleMatrix {
     
     
     @Test
+    void testGetDeterminant0() {
+        try {
+            double determinant = new UpTriangleMatrix(0).getDeterminant();
+        } catch (IllegalArgumentException e) {
+            assertEquals(MatrixErrorCode.ZERO_DIMENSION, e.getMessage());
+        }
+    }
+    
+    
+    @Test
     void testGetDeterminant1() {
         IMatrix matrix = new UpTriangleMatrix(1);
         
-        assertEquals(0, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(0, matrix.getDeterminant(), UpTriangleMatrix.EPS);
     }
     
     
@@ -146,7 +151,7 @@ public class TestUpTriangleMatrix {
         
         matrix.setElem(0, 0, -8);
         
-        assertEquals(-8, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(-8, matrix.getDeterminant(), UpTriangleMatrix.EPS);
     }
     
     
@@ -156,7 +161,7 @@ public class TestUpTriangleMatrix {
         
         matrix.setElem(0, 1, 5);
         
-        assertEquals(0, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(0, matrix.getDeterminant(), UpTriangleMatrix.EPS);
     }
     
     
@@ -167,7 +172,7 @@ public class TestUpTriangleMatrix {
         matrix.setElem(0, 0, -2); matrix.setElem(0, 1, -1.9);
         matrix.setElem(1, 0, 0);  matrix.setElem(1, 1, 5);
         
-        assertEquals(-10, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(-10, matrix.getDeterminant(), UpTriangleMatrix.EPS);
     }
     
     
@@ -179,7 +184,7 @@ public class TestUpTriangleMatrix {
                                     matrix.setElem(1, 1, 6);    matrix.setElem(1, 2, 6);
                                                                 matrix.setElem(2, 2, 1);
         
-        assertEquals(-9, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(-9, matrix.getDeterminant(), UpTriangleMatrix.EPS);
     }
     
     
@@ -193,7 +198,7 @@ public class TestUpTriangleMatrix {
         matrix.setElem(3, 3, 700);
         matrix.setElem(4, 4, -0.0002);
         
-        assertEquals(3.15, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(3.15, matrix.getDeterminant(), UpTriangleMatrix.EPS);
     }
     
     
@@ -206,8 +211,8 @@ public class TestUpTriangleMatrix {
                 matrix.setElem(i, j, Math.pow(-1, i) * (i % 2 + 1));
         
         assertAll(
-                () -> assertEquals(-8192, matrix.getDeterminant(), SquareMatrix.EPS),
-                () -> assertEquals(-8192, matrix.getDeterminant(), SquareMatrix.EPS)
+                () -> assertEquals(-8192, matrix.getDeterminant(), UpTriangleMatrix.EPS),
+                () -> assertEquals(-8192, matrix.getDeterminant(), UpTriangleMatrix.EPS)
         );
     }
     

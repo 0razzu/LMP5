@@ -2,6 +2,7 @@ package matrixes.square_matrixes;
 
 
 import matrixes.IMatrix;
+import matrixes.MatrixErrorCode;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,15 +26,9 @@ public class TestDiagMatrix {
     @Test
     void testConstrExceptions() {
         try {
-            IMatrix matrix1 = new DiagMatrix(-5);
+            IMatrix matrix = new DiagMatrix(-5);
         } catch (IllegalArgumentException e) {
-            assertEquals("Matrix dimension must be positive, but was -5", e.getMessage());
-        }
-        
-        try {
-            IMatrix matrix2 = new DiagMatrix(0);
-        } catch (IllegalArgumentException e) {
-            assertEquals("Matrix dimension must be positive, but was 0", e.getMessage());
+            assertEquals("Matrix dimension cannot be negative, but was -5", e.getMessage());
         }
     }
     
@@ -132,59 +127,69 @@ public class TestDiagMatrix {
     
     
     @Test
+    void testGetDeterminant0() {
+        try {
+            double determinant = new DiagMatrix(0).getDeterminant();
+        } catch (IllegalArgumentException e) {
+            assertEquals(MatrixErrorCode.ZERO_DIMENSION, e.getMessage());
+        }
+    }
+    
+    
+    @Test
     void testGetDeterminant1() {
-        IMatrix matrix = new SquareMatrix(1);
+        IMatrix matrix = new DiagMatrix(1);
         
-        assertEquals(0, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(0, matrix.getDeterminant(), DiagMatrix.EPS);
     }
     
     
     @Test
     void testGetDeterminant2() {
-        IMatrix matrix = new SquareMatrix(1);
+        IMatrix matrix = new DiagMatrix(1);
         
         matrix.setElem(0, 0, 2);
         
-        assertEquals(2, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(2, matrix.getDeterminant(), DiagMatrix.EPS);
     }
     
     
     @Test
     void testGetDeterminant3() {
-        IMatrix matrix = new SquareMatrix(2);
+        IMatrix matrix = new DiagMatrix(2);
         
         matrix.setElem(1, 1, 5);
         
-        assertEquals(0, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(0, matrix.getDeterminant(), DiagMatrix.EPS);
     }
     
     
     @Test
     void testGetDeterminant4() {
-        IMatrix matrix = new SquareMatrix(2);
+        IMatrix matrix = new DiagMatrix(2);
         
         matrix.setElem(0, 0, -2);
         matrix.setElem(1, 1, 5);
         
-        assertEquals(-10, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(-10, matrix.getDeterminant(), DiagMatrix.EPS);
     }
     
     
     @Test
     void testGetDeterminant5() {
-        IMatrix matrix = new SquareMatrix(3);
+        IMatrix matrix = new DiagMatrix(3);
         
         matrix.setElem(0, 0, -1);
         matrix.setElem(1, 1, 8);
         matrix.setElem(2, 2, 2.5);
         
-        assertEquals(-20, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(-20, matrix.getDeterminant(), DiagMatrix.EPS);
     }
     
     
     @Test
     void testGetDeterminant6() {
-        IMatrix matrix = new SquareMatrix(5);
+        IMatrix matrix = new DiagMatrix(5);
         
         matrix.setElem(0, 0, -10);
         matrix.setElem(1, 1, 1.25);
@@ -192,7 +197,7 @@ public class TestDiagMatrix {
         matrix.setElem(3, 3, 20);
         matrix.setElem(4, 4, -0.01);
         
-        assertEquals(3.75, matrix.getDeterminant(), SquareMatrix.EPS);
+        assertEquals(3.75, matrix.getDeterminant(), DiagMatrix.EPS);
     }
     
     
@@ -204,8 +209,8 @@ public class TestDiagMatrix {
             matrix.setElem(i, i, Math.pow(-1, i) * (i % 3 + 1));
         
         assertAll(
-                () -> assertEquals(-46656, matrix.getDeterminant(), SquareMatrix.EPS),
-                () -> assertEquals(-46656, matrix.getDeterminant(), SquareMatrix.EPS)
+                () -> assertEquals(-46656, matrix.getDeterminant(), DiagMatrix.EPS),
+                () -> assertEquals(-46656, matrix.getDeterminant(), DiagMatrix.EPS)
         );
     }
     

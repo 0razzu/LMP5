@@ -2,6 +2,7 @@ package matrixes.square_matrixes;
 
 
 import matrixes.IMatrix;
+import matrixes.MatrixErrorCode;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
@@ -27,15 +28,9 @@ public class TestSquareMatrix {
     @Test
     void testConstrExceptions() {
         try {
-            IMatrix matrix1 = new SquareMatrix(-5);
+            IMatrix matrix = new SquareMatrix(-5);
         } catch (IllegalArgumentException e) {
-            assertEquals("Matrix dimension must be positive, but was -5", e.getMessage());
-        }
-    
-        try {
-            IMatrix matrix2 = new SquareMatrix(0);
-        } catch (IllegalArgumentException e) {
-            assertEquals("Matrix dimension must be positive, but was 0", e.getMessage());
+            assertEquals("Matrix dimension cannot be negative, but was -5", e.getMessage());
         }
     }
     
@@ -119,6 +114,16 @@ public class TestSquareMatrix {
             double d = matrix1.getElem(31, 0);
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 3, row = 31, column = 0", e.getMessage());
+        }
+    }
+    
+    
+    @Test
+    void testGetDeterminant0() {
+        try {
+            double determinant = new SquareMatrix(0).getDeterminant();
+        } catch (IllegalArgumentException e) {
+            assertEquals(MatrixErrorCode.ZERO_DIMENSION, e.getMessage());
         }
     }
     

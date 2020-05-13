@@ -23,6 +23,7 @@ public class SquareMatrix implements IMatrix {
     
     // fixed
     
+    
     public SquareMatrix(int dimension) {
         if (dimension < 0)
             throw new IllegalArgumentException(
@@ -30,6 +31,17 @@ public class SquareMatrix implements IMatrix {
         
         this.dimension = dimension;
         data = new double[dimension * dimension];
+    }
+    
+    
+    private SquareMatrix(SquareMatrix matrix) {
+        dimension = matrix.dimension;
+        int squaredDimension = dimension * dimension;
+        
+        data = new double[squaredDimension];
+        System.arraycopy(matrix.data, 0, data, 0, squaredDimension);
+        determinant = matrix.determinant;
+        determinantCalculated = matrix.determinantCalculated;
     }
     
     
@@ -78,46 +90,60 @@ public class SquareMatrix implements IMatrix {
          зачем работать с массивом, когда можно создать еще одну squarematrix
          (нужен только конструктор копирования и метод переставляющий две строки)?
         */
-        double[][] dataCopy = new double[dimension][dimension];
         
-        for (int i = 0; i < dimension; i++)
-            System.arraycopy(data, i * dimension, dataCopy[i], 0, dimension);
+        // fixed
+        
+        SquareMatrix copy = new SquareMatrix(this);
         
         determinant = 1;
         
         for (int i = 0; i < dimension - 1; i++) {
-            if (abs(dataCopy[i][i]) < EPS)
+            if (abs(copy.getElem(i, i)) < EPS)
                 for (int k = i + 1; k < dimension; k++)
-                    if (abs(dataCopy[k][i]) > EPS) {
-                        double[] t = dataCopy[k];
-                        dataCopy[k] = dataCopy[i];
-                        dataCopy[i] = t;
+                    if (abs(copy.getElem(k, i)) > EPS) {
+                        copy.swapStrings(i, k);
                         determinant *= -1;
                         break;
                     }
             
-            if (abs(dataCopy[i][i]) < EPS) {
+            if (abs(copy.getElem(i, i)) < EPS) {
                 determinant = 0;
                 determinantCalculated = true;
                 return determinant;
             }
             
-            determinant *= dataCopy[i][i];
+            determinant *= copy.getElem(i, i);
             
             for (int k = i + 1; k < dimension; k++) {
-                double coef = dataCopy[k][i] / dataCopy[i][i];
-                dataCopy[k][i] = 0;
+                double coef = copy.getElem(k, i) / copy.getElem(i, i);
+                copy.setElem(k, i, 0);
                 
                 if (abs(coef) > EPS)
                     for (int j = i + 1; j < dimension; j++)
-                        dataCopy[k][j] -= coef * dataCopy[i][j];
+                        copy.setElem(k, j, copy.getElem(k, j) - coef * copy.getElem(i, j));
             }
         }
         
-        determinant *= dataCopy[dimension - 1][dimension - 1];
+        determinant *= copy.getElem(dimension - 1, dimension - 1);
         
         determinantCalculated = true;
         return determinant;
+    }
+    
+    
+    public void swapStrings(int i, int j) {
+        checkIndexes(i, 0);
+        checkIndexes(j, 0);
+        
+        if (i != j) {
+            for (int k = 0; k < dimension; k++) {
+                double t = data[i * dimension + k];
+                data[i * dimension + k] = data[j * dimension + k];
+                data[j * dimension + k] = t;
+            }
+            
+            determinant *= -1;
+        }
     }
     
     

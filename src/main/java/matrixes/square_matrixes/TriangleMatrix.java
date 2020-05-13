@@ -7,7 +7,7 @@ import matrixes.MatrixErrorCode;
 public abstract class TriangleMatrix extends SquareMatrix {
     public TriangleMatrix(int dimension) {
         super();
-    
+        
         if (dimension < 0)
             throw new IllegalArgumentException(
                     String.format(MatrixErrorCode.NEGATIVE_DIMENSION, dimension));
@@ -40,4 +40,8 @@ public abstract class TriangleMatrix extends SquareMatrix {
         determinantCalculated = true;
         return determinant;
     }
+    
+    
+    @Override
+    public abstract void swapStrings(int i, int j);
 }

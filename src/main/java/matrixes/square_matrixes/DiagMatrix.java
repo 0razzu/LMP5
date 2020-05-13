@@ -41,15 +41,22 @@ public class DiagMatrix extends TriangleMatrix {
     
     
     @Override
+    public void swapStrings(int i, int j) {
+        if (i != j)
+            throw new IllegalArgumentException(MatrixErrorCode.CANNOT_SWAP_STRINGS);
+    }
+    
+    
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         
         if (o instanceof DiagMatrix) {
             DiagMatrix that = (DiagMatrix) o;
-    
+            
             if (dimension != that.dimension)
                 return false;
-    
+            
             for (int i = 0; i < data.length; i++)
                 if (abs(data[i] - that.data[i]) > EPS)
                     return false;

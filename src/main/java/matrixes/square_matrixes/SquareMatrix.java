@@ -16,7 +16,10 @@ public class SquareMatrix implements IMatrix {
     protected double determinant;
     protected boolean determinantCalculated;
     
-    
+    /* Филиппов А.В. 14.05.2020 Комментарий не удалять.
+     Размер матрицы равный 0 - это удобная абстракция, т.к. иначе вместо матрицы придется использовать null,
+     а это дополнительные проверки.
+    */
     public SquareMatrix(int dimension) {
         if (dimension <= 0)
             throw new IllegalArgumentException(
@@ -64,7 +67,11 @@ public class SquareMatrix implements IMatrix {
     public double getDeterminant() {
         if (determinantCalculated)
             return determinant;
-        
+
+        /* Филиппов А.В. 14.05.2020 Комментарий не удалять.
+         зачем работать с массивом, когда можно создать еще одну squarematrix
+         (нужен только конструктор копирования и метод переставляющий две строки)?
+        */
         double[][] dataCopy = new double[dimension][dimension];
         
         for (int i = 0; i < dimension; i++)

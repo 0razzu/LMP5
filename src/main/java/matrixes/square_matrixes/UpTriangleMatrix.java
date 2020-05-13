@@ -51,6 +51,12 @@ public class UpTriangleMatrix extends TriangleMatrix {
             for (int k = min; k < max; k++)
                 if (abs(getElem(min, k)) > EPS)
                     throw new IllegalArgumentException(MatrixErrorCode.CANNOT_SWAP_STRINGS);
+    
+            for (int k = min; k < dimension; k++) {
+                double t = getElem(i, k);
+                setElem(i, k, getElem(j, k));
+                setElem(j, k, t);
+            }
         }
     }
     

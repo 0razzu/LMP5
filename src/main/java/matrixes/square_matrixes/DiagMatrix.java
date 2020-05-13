@@ -42,7 +42,7 @@ public class DiagMatrix extends TriangleMatrix {
     
     @Override
     public void swapStrings(int i, int j) {
-        if (i != j)
+        if (i != j && (getElem(i, i) != 0 || getElem(j, j) != 0))
             throw new IllegalArgumentException(MatrixErrorCode.CANNOT_SWAP_STRINGS);
     }
     

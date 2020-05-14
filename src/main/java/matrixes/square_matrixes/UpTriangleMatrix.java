@@ -3,7 +3,7 @@ package matrixes.square_matrixes;
 
 import matrixes.MatrixErrorCode;
 
-import static java.lang.Math.abs;
+import static java.lang.Math.*;
 
 
 public class UpTriangleMatrix extends TriangleMatrix {
@@ -21,7 +21,7 @@ public class UpTriangleMatrix extends TriangleMatrix {
         if (abs(value) > EPS) {
             if (row > column)
                 throw new ArrayIndexOutOfBoundsException(
-                        String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
+                        String.format(MatrixErrorCode.INCORRECT_INDEXES, dimension, row, column));
             
             data[row * dimension + column - row * (row + 1) / 2] = value;
             
@@ -39,6 +39,28 @@ public class UpTriangleMatrix extends TriangleMatrix {
             return 0;
         
         return data[row * dimension + column - row * (row + 1) / 2];
+    }
+    
+    
+    @Override
+    public void swapStrings(int i, int j) {
+        checkIndexes(i, 0);
+        checkIndexes(j, 0);
+        
+        if (i != j) {
+            int min = min(i, j);
+            int max = max(i, j);
+            
+            for (int k = min; k < max; k++)
+                if (abs(getElem(min, k)) > EPS)
+                    throw new IllegalArgumentException(MatrixErrorCode.CANNOT_SWAP_STRINGS);
+    
+            for (int k = min; k < dimension; k++) {
+                double t = getElem(i, k);
+                setElem(i, k, getElem(j, k));
+                setElem(j, k, t);
+            }
+        }
     }
     
     

@@ -21,7 +21,7 @@ public class DiagMatrix extends TriangleMatrix {
         if (abs(value) > EPS) {
             if (row != column)
                 throw new ArrayIndexOutOfBoundsException(
-                        String.format(MatrixErrorCode.INCORRECT_INDEXES.getErrorString(), dimension, row, column));
+                        String.format(MatrixErrorCode.INCORRECT_INDEXES, dimension, row, column));
             
             data[row] = value;
             determinantCalculated = false;
@@ -41,15 +41,25 @@ public class DiagMatrix extends TriangleMatrix {
     
     
     @Override
+    public void swapStrings(int i, int j) {
+        checkIndexes(i, 0);
+        checkIndexes(j, 0);
+        
+        if (i != j && (getElem(i, i) != 0 || getElem(j, j) != 0))
+            throw new IllegalArgumentException(MatrixErrorCode.CANNOT_SWAP_STRINGS);
+    }
+    
+    
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         
         if (o instanceof DiagMatrix) {
             DiagMatrix that = (DiagMatrix) o;
-    
+            
             if (dimension != that.dimension)
                 return false;
-    
+            
             for (int i = 0; i < data.length; i++)
                 if (abs(data[i] - that.data[i]) > EPS)
                     return false;

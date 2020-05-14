@@ -27,6 +27,7 @@ public class TestDiagMatrix {
     void testConstrExceptions() {
         try {
             IMatrix matrix = new DiagMatrix(-5);
+            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("Matrix dimension cannot be negative, but was -5", e.getMessage());
         }
@@ -65,30 +66,35 @@ public class TestDiagMatrix {
         
         try {
             matrix1.setElem(-2, 1, 2);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 5, row = -2, column = 1", e.getMessage());
         }
         
         try {
             matrix2.setElem(1, -1, 1);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 11, row = 1, column = -1", e.getMessage());
         }
         
         try {
             matrix2.setElem(11, 11, 8);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 11, row = 11, column = 11", e.getMessage());
         }
         
         try {
             matrix1.setElem(3, 6, -1);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 5, row = 3, column = 6", e.getMessage());
         }
         
         try {
             matrix2.setElem(1, 2, 1);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 11, row = 1, column = 2", e.getMessage());
         }
@@ -102,24 +108,28 @@ public class TestDiagMatrix {
         
         try {
             double a = matrix1.getElem(-2, 1);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 3, row = -2, column = 1", e.getMessage());
         }
         
         try {
             double b = matrix2.getElem(1, -1);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 16, row = 1, column = -1", e.getMessage());
         }
         
         try {
             double c = matrix2.getElem(16, 2);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 16, row = 16, column = 2", e.getMessage());
         }
         
         try {
             double d = matrix1.getElem(2, 100);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 3, row = 2, column = 100", e.getMessage());
         }
@@ -130,6 +140,7 @@ public class TestDiagMatrix {
     void testGetDeterminant0() {
         try {
             double determinant = new DiagMatrix(0).getDeterminant();
+            fail();
         } catch (IllegalArgumentException e) {
             assertEquals(MatrixErrorCode.ZERO_DIMENSION, e.getMessage());
         }
@@ -212,6 +223,61 @@ public class TestDiagMatrix {
                 () -> assertEquals(-46656, matrix.getDeterminant(), DiagMatrix.EPS),
                 () -> assertEquals(-46656, matrix.getDeterminant(), DiagMatrix.EPS)
         );
+    }
+    
+    
+    @Test
+    void testSwapStrings() {
+        DiagMatrix actual = new DiagMatrix(3);
+        DiagMatrix expected = new DiagMatrix(3);
+        
+        actual.setElem(0, 0, 2);  actual.setElem(1, 1, 0);  actual.setElem(2, 2, 0);
+        expected.setElem(0, 0, 2);  expected.setElem(1, 1, 0);  expected.setElem(2, 2, 0);
+        
+        actual.swapStrings(1, 2);
+        
+        assertAll(
+                () -> assertEquals(expected, actual),
+                () -> assertEquals(0, actual.getDeterminant(), UpTriangleMatrix.EPS)
+        );
+    }
+    
+    
+    @Test
+    void testSwapStringsExceptions() {
+        DiagMatrix matrix0 = new DiagMatrix(0);
+        DiagMatrix matrix1 = new DiagMatrix(2);
+        DiagMatrix matrix2 = new DiagMatrix(2);
+        
+        matrix2.setElem(0, 0, 1);
+        
+        try {
+            matrix0.swapStrings(0, 0);
+            fail();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            assertEquals("Incorrect indexes: dimension = 0, row = 0, column = 0", e.getMessage());
+        }
+        
+        try {
+            matrix1.swapStrings(-1, 0);
+            fail();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            assertEquals("Incorrect indexes: dimension = 2, row = -1, column = 0", e.getMessage());
+        }
+        
+        try {
+            matrix1.swapStrings(0, 5);
+            fail();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            assertEquals("Incorrect indexes: dimension = 2, row = 5, column = 0", e.getMessage());
+        }
+    
+        try {
+            matrix2.swapStrings(0, 1);
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals(MatrixErrorCode.CANNOT_SWAP_STRINGS, e.getMessage());
+        }
     }
     
     

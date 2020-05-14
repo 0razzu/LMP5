@@ -27,6 +27,7 @@ public class TestUpTriangleMatrix {
     void testConstrExceptions() {
         try {
             IMatrix matrix = new UpTriangleMatrix(-5);
+            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("Matrix dimension cannot be negative, but was -5", e.getMessage());
         }
@@ -66,30 +67,35 @@ public class TestUpTriangleMatrix {
         
         try {
             matrix1.setElem(-2, 1, 2);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 4, row = -2, column = 1", e.getMessage());
         }
         
         try {
             matrix2.setElem(1, -1, 4);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 13, row = 1, column = -1", e.getMessage());
         }
         
         try {
             matrix2.setElem(13, 13, 8);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 13, row = 13, column = 13", e.getMessage());
         }
         
         try {
             matrix1.setElem(1, 6, -1);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 4, row = 1, column = 6", e.getMessage());
         }
         
         try {
             matrix2.setElem(2, 1, 1);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 13, row = 2, column = 1", e.getMessage());
         }
@@ -103,24 +109,28 @@ public class TestUpTriangleMatrix {
         
         try {
             double a = matrix1.getElem(-2, 1);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 3, row = -2, column = 1", e.getMessage());
         }
         
         try {
             double b = matrix2.getElem(1, -1);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 16, row = 1, column = -1", e.getMessage());
         }
         
         try {
             double c = matrix2.getElem(16, 2);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 16, row = 16, column = 2", e.getMessage());
         }
         
         try {
             double d = matrix1.getElem(2, 100);
+            fail();
         } catch (ArrayIndexOutOfBoundsException e) {
             assertEquals("Incorrect indexes: dimension = 3, row = 2, column = 100", e.getMessage());
         }
@@ -131,6 +141,7 @@ public class TestUpTriangleMatrix {
     void testGetDeterminant0() {
         try {
             double determinant = new UpTriangleMatrix(0).getDeterminant();
+            fail();
         } catch (IllegalArgumentException e) {
             assertEquals(MatrixErrorCode.ZERO_DIMENSION, e.getMessage());
         }
@@ -218,6 +229,67 @@ public class TestUpTriangleMatrix {
     
     
     @Test
+    void testSwapStrings() {
+        UpTriangleMatrix actual = new UpTriangleMatrix(3);
+        UpTriangleMatrix expected = new UpTriangleMatrix(3);
+        
+        actual.setElem(0, 0, 2);  actual.setElem(0, 1, 0);  actual.setElem(0, 2, 1);
+                                                            actual.setElem(1, 2, 8);
+                                                            actual.setElem(2, 2, 1);
+        
+        expected.setElem(0, 0, 2);  expected.setElem(0, 1, 0);  expected.setElem(0, 2, 1);
+                                                                expected.setElem(1, 2, 1);
+                                                                expected.setElem(2, 2, 8);
+        
+        actual.swapStrings(1, 2);
+        
+        assertAll(
+                () -> assertEquals(expected, actual),
+                () -> assertEquals(0, actual.getDeterminant(), UpTriangleMatrix.EPS)
+        );
+    }
+    
+    
+    @Test
+    void testSwapStringsExceptions() {
+        UpTriangleMatrix matrix0 = new UpTriangleMatrix(0);
+        UpTriangleMatrix matrix1 = new UpTriangleMatrix(2);
+        UpTriangleMatrix matrix2 = new UpTriangleMatrix(2);
+        
+        matrix2.setElem(0, 0, 1);
+        matrix2.setElem(1, 1, 1);
+        
+        try {
+            matrix0.swapStrings(0, 0);
+            fail();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            assertEquals("Incorrect indexes: dimension = 0, row = 0, column = 0", e.getMessage());
+        }
+        
+        try {
+            matrix1.swapStrings(-1, 0);
+            fail();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            assertEquals("Incorrect indexes: dimension = 2, row = -1, column = 0", e.getMessage());
+        }
+        
+        try {
+            matrix1.swapStrings(0, 5);
+            fail();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            assertEquals("Incorrect indexes: dimension = 2, row = 5, column = 0", e.getMessage());
+        }
+    
+        try {
+            matrix2.swapStrings(0, 1);
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals(MatrixErrorCode.CANNOT_SWAP_STRINGS, e.getMessage());
+        }
+    }
+    
+    
+    @Test
     void testEquals() {
         IMatrix matrix1 = new UpTriangleMatrix(1);
         IMatrix matrix2 = new UpTriangleMatrix(2);
@@ -225,7 +297,7 @@ public class TestUpTriangleMatrix {
         IMatrix matrix4 = new SquareMatrix(2);
         IMatrix matrix5 = matrix2;
         IMatrix matrix6 = new UpTriangleMatrix(3);
-        IMatrix matrix7 = new DiagMatrix(3);
+        IMatrix matrix7 = new UpTriangleMatrix(3);
         IMatrix matrix8 = new SquareMatrix(3);
         IMatrix matrix9 = new SquareMatrix(3);
         

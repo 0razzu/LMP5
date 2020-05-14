@@ -44,6 +44,9 @@ public class UpTriangleMatrix extends TriangleMatrix {
     
     @Override
     public void swapStrings(int i, int j) {
+        checkIndexes(i, 0);
+        checkIndexes(j, 0);
+        
         if (i != j) {
             int min = min(i, j);
             int max = max(i, j);
